@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Management System</title>
+    <link rel="stylesheet" href="fonts/css/fontello.css">
+    <style>
+        @keyframes fancy1 {
+            0% {
+                border-radius: 50% 50% 56% 44% / 40% 34% 66% 60%;
+            }
+
+            40% {
+                border-radius: 70% 30% 63% 37% / 27% 56% 44% 73%;
+            }
+
+            80% {
+                border-radius: 83% 17% 41% 59% / 10% 46% 54% 90%;
+            }
+
+            100% {
+                border-radius: 91% 9% 69% 31% / 10% 78% 22% 90%;
+            }
+        }
+
+        @keyframes fancy2 {
+            0% {
+                border-radius: 21% 79% 47% 53% / 86% 32% 68% 14%;
+            }
+
+            40% {
+                border-radius: 38% 62% 20% 80% / 90% 64% 36% 10%;
+            }
+
+            80% {
+                border-radius: 24% 76% 21% 79% / 58% 17% 83% 42%;
+            }
+
+            100% {
+                border-radius: 46% 54% 45% 55% / 41% 36% 64% 59%;
+            }
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            background-image: url(img/library.jpg);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        .container {
+            width: 600px;
+            margin: 20px auto;
+            background: white;
+            padding: 25px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            >h1 {
+                text-align: center;
+                color: #333;
+            }
+            >input {
+                width: 96.5%;
+                padding: 10px;
+                margin: 10px 0;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+            }
+            >button {
+                width: 100%;
+                padding: 10px;
+                background-color: #5cb85c;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                margin: 5px 0;
+                &:hover{
+                    background-color: #4cae4c;
+                }
+            }
+        }
+        #result {
+            margin-top: 20px;
+            padding: 10px;
+            background: #e9ecef;
+            border-radius: 5px;
+        }
+        .book-item {
+            margin: 5px 0;
+            padding: 10px;
+            background: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .stickyfooter {
+            width: 110px;
+            height: 110px;
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            background-color: rgb(0, 22, 164);
+            animation: fancy1 4s linear infinite alternate;
+            z-index: 4;
+            >figure {
+                transform: translate(-40px , -20px);
+                width: 100%;
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                position: relative;
+                cursor: pointer;
+                &:hover{
+                    >ul{
+                        opacity: 1;
+                        transform: translateX(-35px);
+                        left: -35px;
+                    }
+                }
+                >img {
+                    width: 90%;
+                    height: 90%;
+                    object-fit: contain;
+                    animation: fancy2 4s linear infinite alternate;
+                }
+                >ul{
+                    width: 30%;
+                    height: 70%;
+                    display: flex;
+                    flex-wrap: wrap;
+                    align-items: stretch;
+                    position: absolute;
+                    top: 15px;
+                    left: 0;
+                    opacity: 0;
+                    transition: .5s;
+                    >li{
+                        width: 100%;
+                        height: 33%;
+                        list-style-type: none;
+                        &:hover{
+                            >a{
+                                >i{
+                                    color: rgb(124, 17, 17);
+                                    transition: .4s;
+                                }
+                            }
+                        }
+                        >a{
+                            text-decoration: none;
+                            >i{
+                                color: rgba(49, 80, 218, 0.959);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Library Management System</h1>
+        <input type="text" placeholder="Book Name" id="bookName">
+        <input type="text" placeholder="Author" id="author">
+        <input type="text" placeholder="Publication Year" id="pubYear">
+        <input type="text" placeholder="Category" id="category">
+        <button id="addBook">Add Book</button>
+        <input type="text" placeholder="Search by Name/Author/Year/Category" id="searchInput">
+        <button id="searchBook">Search Book</button>
+        <button id="showAllBooks">Show All Books</button>
+        <button id="clearBooks">Clear All Books</button>
+        <div id="result"></div>
+    </div>
+    <section class="stickyfooter">
+        <figure>
+            <img src="img/184939691.jfif" alt="">
+            <ul>
+                <li><a href="https://github.com/kia-torkashvand"><i class="icon-github-circled"></i></a></li>
+                <li><a href="https://instagram.com/kia.torkashvand.web"><i class="icon-instagram"></i></a></li>
+                <li><a href="https://www.linkedin.com/in/kia-torkashvand-23b98b332/"><i class="icon-linkedin-squared"></i></a></li>
+            </ul>
+        </figure>
+    </section>
+</body>
+    <script>
+        const dataBase = JSON.parse(localStorage.getItem('books')) || [];
+        const addBookBtn = document.getElementById('addBook');
+        const searchBookBtn = document.getElementById('searchBook');
+        const showAllBooksBtn = document.getElementById('showAllBooks');
+        const clearBooksBtn = document.getElementById('clearBooks');
+        const resultDiv = document.getElementById('result');
+
+        addBookBtn.addEventListener('click', () => {
+            const bookName = document.getElementById('bookName').value || 'Unknown Book';
+            const author = document.getElementById('author').value || 'Unknown Author';
+            const pubYear = document.getElementById('pubYear').value || 'Unknown Year';
+            const category = document.getElementById('category').value || 'Unknown Category';
+
+            const book = { bookName, author, pubYear, category };
+            dataBase.push(book);
+            localStorage.setItem('books', JSON.stringify(dataBase));
+            alert('Book added successfully!');
+            location.reload()
+        });
+
+        searchBookBtn.addEventListener('click', () => {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const results = dataBase.filter(book => 
+                book.bookName.toLowerCase().includes(searchTerm) ||
+                book.author.toLowerCase().includes(searchTerm) ||
+                book.pubYear.includes(searchTerm) ||
+                book.category.toLowerCase().includes(searchTerm)
+            );
+
+            displayResults(results);
+        });
+
+        showAllBooksBtn.addEventListener('click', () => {
+            displayResults(dataBase);
+        });
+
+        clearBooksBtn.addEventListener('click', () => {
+            localStorage.removeItem('books');
+            resultDiv.innerHTML = '<p>All books cleared!</p>';
+            while ( dataBase.length) {
+                dataBase.pop();
+            }
+        });
+
+        function displayResults(books) {
+            resultDiv.innerHTML = books.length ? books.map(book => 
+                `<div class="book-item">${book.bookName} by ${book.author} (${book.pubYear}) - Category: ${book.category}</div>`
+            ).join('') : '<p>No books found.</p>';
+        }
+
+    </script>
+
+</html>
