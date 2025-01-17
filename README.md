@@ -5,6 +5,5 @@
     <li><a href="https://kia-torkashvand.github.io/library-manager/">DEMO LINK</a></li>
 </ul>
 <br>
-<img src="(https://github.com/user-attachments/assets/89c0d943-19e5-4adc-a102-2162761cc1c2)
-" alt="">
-![Capture]((https://github.com/user-attachments/assets/89c0d943-19e5-4adc-a102-2162761cc1c2)
+
+![Capture](https://github.com/user-attachments/assets/89c0d943-19e5-4adc-a102-2162761cc1c2)
